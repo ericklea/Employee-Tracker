@@ -87,6 +87,24 @@ app.post('/api/department', ({ body }, res) => {
         });
     });
 
+// Add a role
+app.post('/api/role', ({ body }, res) => {
+    const sql = `INSERT INTO role (title, salary, department_id)
+    VALUES (?, ?, ?)`;
+    const params = [body.title, body.salary, body.department_id];
+
+    db.query(sql, params, (err, result) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+            }
+            res.json({
+            message: 'success',
+            data: body
+            });
+        });
+    });
+
 // Default response for any other request (Not Found)
 app.use((req, res) => {
     res.status(404).end();
