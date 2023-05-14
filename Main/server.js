@@ -36,6 +36,23 @@ app.get('/api/department', (req, res) => {
     });
 });
 
+// View all roles
+app.get('/api/role', (req, res) => {
+    const sql = `SELECT * FROM role`;
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+        }
+        res.json({
+        message: 'success',
+        data: rows
+        });
+    });
+});
+
+
 // Add a department
 app.post('/api/department', ({ body }, res) => {
     const sql = `INSERT INTO department (name)
