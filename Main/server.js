@@ -52,6 +52,22 @@ app.get('/api/role', (req, res) => {
     });
 });
 
+// View all employees
+app.get('/api/employee', (req, res) => {
+    const sql = `SELECT * FROM employee`;
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+        }
+        res.json({
+        message: 'success',
+        data: rows
+        });
+    });
+});
+
 
 // Add a department
 app.post('/api/department', ({ body }, res) => {
