@@ -20,6 +20,21 @@ const db = mysql.createConnection(
     },
     console.log(`Connected to the employee_db database.`)
 );
+// View all departments
+app.get('/api/department', (req, res) => {
+    const sql = `SELECT * FROM department`;
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+        }
+        res.json({
+        message: 'success',
+        data: rows
+        });
+    });
+});
 
 // Add a department
 app.post('/api/department', ({ body }, res) => {
@@ -38,7 +53,7 @@ app.post('/api/department', ({ body }, res) => {
             });
         });
     });
-    
+
 // Default response for any other request (Not Found)
 app.use((req, res) => {
     res.status(404).end();
