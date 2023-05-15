@@ -16,9 +16,9 @@ const db = mysql.createConnection(
       host: 'localhost',
       // MySQL username,
       user: 'root',
-      database: 'employee_db',
+      database: 'tracker_db',
     },
-    console.log(`Connected to the employee_db database.`)
+    console.log(`Connected to the tracker_db database.`)
 );
 // View all departments
 app.get('/api/department', (req, res) => {
