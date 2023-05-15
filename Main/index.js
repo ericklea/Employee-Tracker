@@ -60,6 +60,68 @@ switch (choice) {
         break;
 }
 
+// Functions for each option
+function viewDepartments() {
+    connection.query('SELECT * FROM department', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        connection.end();
+    });
+}
+function viewRoles() {
+    connection.query('SELECT * FROM role', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        connection.end();
+    });
+}
+function viewEmployees() {
+    connection.query('SELECT * FROM employee', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        connection.end();
+    });
+}
+function addDepartment() {
+    const department = prompt('Enter the name of the department you would like to add: ');
+    connection.query('INSERT INTO department (name) VALUES (?)', [department], (err, res) => {
+        if (err) throw err;
+        console.log('Department added.');
+        connection.end();
+    });
+}
+function addRole() {
+    const role = prompt('Enter the name of the role you would like to add: ');
+    const salary = prompt('Enter the salary for this role: ');
+    const department = prompt('Enter the department ID for this role: ');
+    connection.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', [role, salary, department], (err, res) => {
+        if (err) throw err;
+        console.log('Role added.');
+        connection.end();
+    });
+}
+function addEmployee() {
+    const firstName = prompt('Enter the employee\'s first name: ');
+    const lastName = prompt('Enter the employee\'s last name: ');
+    const role = prompt('Enter the role ID for this employee: ');
+    const manager = prompt('Enter the manager ID for this employee: ');
+    connection.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [firstName, lastName, role, manager], (err, res) => {
+        if (err) throw err;
+        console.log('Employee added.');
+        connection.end();
+    });
+}
+function updateEmployeeRole() {
+    const employee = prompt('Enter the ID of the employee you would like to update: ');
+    const role = prompt('Enter the role ID for this employee: ');
+    connection.query('UPDATE employee SET role_id = ? WHERE id = ?', [role, employee], (err, res) => {
+        if (err) throw err;
+        console.log('Employee role updated.');
+        connection.end();
+    });
+}
+
+
 
 
 
