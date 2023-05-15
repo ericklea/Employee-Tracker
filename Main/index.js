@@ -26,5 +26,40 @@ console.log('6. Add an employee');
 console.log('7. Update an employee role');
 console.log('8. Exit');
 
+// Get user input
+const choice = prompt('Enter your selection: ');
+
+// Handle user input
+switch (choice) {
+    case '1':
+        viewDepartments();
+        break;
+    case '2':
+        viewRoles();
+        break;
+    case '3':
+        viewEmployees();
+        break;
+    case '4':
+        addDepartment();
+        break;
+    case '5':
+        addRole();
+        break;
+    case '6':
+        addEmployee();
+        break;
+    case '7':
+        updateEmployeeRole();
+        break;
+    case '8':
+        connection.end();
+        break;
+    default:
+        console.log('Invalid selection. Please try again.');
+        break;
+}
+
+
 
 
