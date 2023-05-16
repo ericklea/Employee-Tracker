@@ -145,4 +145,45 @@ const addRole = () => {
     })
 }
 
+// Add an employee
+const addEmployee = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'What is the first name of the employee?'
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'What is the last name of the employee?'
+        },
+        {
+            type: 'input',
+            name: 'role_id',
+            message: 'What is the role ID of the employee?'
+        },
+        {
+            type: 'input',
+            name: 'manager_id',
+            message: 'What is the manager ID of the employee?'
+        }
+    ])
+    .then((data) => {
+        const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+        VALUES (?, ?, ?, ?)`;
+        const params = [data.first_name, data.last_name, data.role_id, data.manager_id];
+
+        db.query(sql, params, (err, result) => {
+            if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+            }
+            console.log('Employee added successfully!');
+            promptUser();
+        });
+    })
+}
+
+
 
