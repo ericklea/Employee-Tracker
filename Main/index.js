@@ -185,5 +185,34 @@ const addEmployee = () => {
     })
 }
 
+// Update an employee role
+const updateEmployeeRole = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'employee_id',
+            message: 'What is the ID of the employee you would like to update?'
+        },
+        {
+            type: 'input',
+            name: 'role_id',
+            message: 'What is the new role ID for this employee?'
+        }
+    ])
+    .then((data) => {
+        const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
+        const params = [data.role_id, data.employee_id];
+
+        db.query(sql, params, (err, result) => {
+            if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+            }
+            console.log('Employee role updated successfully!');
+            promptUser();
+        });
+    })
+}
+
 
 
