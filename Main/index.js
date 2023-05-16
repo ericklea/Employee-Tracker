@@ -71,4 +71,18 @@ const viewRoles = () => {
     });
 }
 
+// View all employees
+const viewEmployees = () => {
+    const sql = `SELECT * FROM employee`;
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+        }
+        console.table(rows);
+        promptUser();
+    });
+}
+
 
