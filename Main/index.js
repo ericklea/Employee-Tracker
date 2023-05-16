@@ -110,4 +110,39 @@ const addDepartment = () => {
     })
 }
 
+// Add a role
+const addRole = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What is the name of the role?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary for this role?'
+        },
+        {
+            type: 'input',
+            name: 'department_id',
+            message: 'What is the department ID for this role?'
+        }
+    ])
+    .then((data) => {
+        const sql = `INSERT INTO role (title, salary, department_id)
+        VALUES (?, ?, ?)`;
+        const params = [data.title, data.salary, data.department_id];
+
+        db.query(sql, params, (err, result) => {
+            if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+            }
+            console.log('Role added successfully!');
+            promptUser();
+        });
+    })
+}
+
 
