@@ -214,5 +214,20 @@ const updateEmployeeRole = () => {
     })
 }
 
+// Connect to database
+const db = sql.createConnection(
+    {
+        host: 'localhost',
+        // MySQL username,
+        user: 'root',
+        database: 'tracker_db',
+    },
+    console.log(`Connected to the tracker_db database.`)
+);
+
+promptUser();
+
+module.exports = db;
+
 
 
