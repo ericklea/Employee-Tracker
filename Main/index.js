@@ -85,4 +85,29 @@ const viewEmployees = () => {
     });
 }
 
+// Add a department
+const addDepartment = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'What is the name of the department?'
+        }
+    ])
+    .then((data) => {
+        const sql = `INSERT INTO department (name)
+        VALUES (?)`;
+        const params = [data.name];
+
+        db.query(sql, params, (err, result) => {
+            if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+            }
+            console.log('Department added successfully!');
+            promptUser();
+        });
+    })
+}
+
 
