@@ -57,5 +57,18 @@ const viewDepartments = () => {
     });
 }
 
+// View all roles
+const viewRoles = () => {
+    const sql = `SELECT * FROM role`;
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+        }
+        console.table(rows);
+        promptUser();
+    });
+}
 
 
