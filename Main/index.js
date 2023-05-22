@@ -2,8 +2,22 @@
 const inquirer = require('inquirer');
 const sql = require('mysql2');
 
-// Prompt user for what they would like to do
+// Connect to database
+const connect = mysql.createConnection(
+    {
+        host: 'localhost',
+        // MySQL username,
+        user: 'root',
+        database: 'tracker_db'
+    });
 
+connect.connect(err => {
+    if (err) throw err;
+    console.log('Database connected.');
+    promptUser();
+});
+
+// Run inquirer prompt
 const promptUser = () => {
     return inquirer.prompt([
         {
@@ -73,7 +87,7 @@ const viewRoles = () => {
 
 // View all employees
 const viewEmployees = () => {
-    const sql = `SELECT * FROM employee`;
+    const sql = `SELECT * FROM employee JOIN role ON employee.role_id = role.id`;
 
     db.query(sql, (err, rows) => {
         if (err) {

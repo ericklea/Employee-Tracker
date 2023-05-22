@@ -3,6 +3,7 @@
  const mysql = require('mysql2');
  const inquirer = require('inquirer');
  const cTable = require('console.table');
+const { connect } = require('.');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -17,10 +18,9 @@ const db = mysql.createConnection(
       host: 'localhost',
       // MySQL username,
       user: 'root',
-      database: 'tracker_db',
-    },
-    console.log(`Connected to the tracker_db database.`)
-);
+      database: 'tracker_db'
+    });
+    
 // View all departments
 app.get('/api/department', (req, res) => {
     const sql = `SELECT * FROM department`;

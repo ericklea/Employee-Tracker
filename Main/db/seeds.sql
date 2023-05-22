@@ -19,6 +19,6 @@ VALUES (1, "John", "Doe", 2),
        (2, "Jane", "Neuman", NULL),
        (3, "Bob", "Smith", NULL),
        (4, "Sally", "Erickson", 5),
-       (5, "Joe", "Nemeroff", NULL);
-       (6, "Bill", "Waters", NULL)
+       (5, "Joe", "Nemeroff", NULL),
+       (6, "Bill", "Waters", NULL);
      
