@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const sql = require('mysql2');
 
 // Connect to database
-const connect = mysql.createConnection(
+const connection = sql.createConnection(
     {
         host: 'localhost',
         // MySQL username,
@@ -11,9 +11,10 @@ const connect = mysql.createConnection(
         database: 'tracker_db'
     });
 
-connect.connect(err => {
+// Connect to database
+connection.connect(err => {
     if (err) throw err;
-    console.log('Database connected.');
+    console.log('connected as id ' + connection.threadId);
     promptUser();
 });
 
@@ -28,35 +29,52 @@ const promptUser = () => {
         }
     ])
     .then((data) => {
-        switch (data.choice) {
-            case 'View all departments':
-                viewDepartments();
-                break;
-            case 'View all roles':
-                viewRoles();
-                break;
-            case 'View all employees':
-                viewEmployees();
-                break;
-            case 'Add a department':
-                addDepartment();
-                break;
-            case 'Add a role':
-                addRole();
-                break;
-            case 'Add an employee':
-                addEmployee();
-                break;
-            case 'Update an employee role':
-                updateEmployeeRole();
-                break;
-            case 'Exit':
-                db.end();
-                break;
-        }
-    })
-}
+        if (data.choice === 'View all departments') {
+            connection.query('SELECT * FROM department', (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                promptUser();
+            });
+        } else if (data.choice === 'View all roles') {
+            connection.query('SELECT * FROM role', (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                promptUser();
+            });
+        } else if (data.choice === 'View all employees') {
+            connection.query('SELECT * FROM employee', (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                promptUser();
+            });
+        } else if (data.choice === 'Add a department') {
+            connection.query('SELECT * FROM department', (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                promptUser();
+            });
+        } else if (data.choice === 'Add a role') {
+            connection.query('SELECT * FROM role', (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                promptUser();
+            });
+        } else if (data.choice === 'Add an employee') {
+            connection.query('SELECT * FROM employee', (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                promptUser();
+            });
+        } else if (data.choice === 'Update an employee role') {
+            connection.query('SELECT * FROM employee', (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                promptUser();
+            });
+        } else {
+            connection.end();
 
+        }
 // View all departments
 const viewDepartments = () => {
     const sql = `SELECT * FROM department`;
@@ -227,17 +245,6 @@ const updateEmployeeRole = () => {
         });
     })
 }
-
-// Connect to database
-const db = sql.createConnection(
-    {
-        host: 'localhost',
-        // MySQL username,
-        user: 'root',
-        database: 'tracker_db',
-    },
-    console.log(`Connected to the tracker_db database.`)
-);
 
 promptUser();
 
