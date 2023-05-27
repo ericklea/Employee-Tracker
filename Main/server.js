@@ -2,8 +2,6 @@
  const express = require('express');
  const mysql = require('mysql2');
  const inquirer = require('inquirer');
- const cTable = require('console.table');
-const { connect } = require('.');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -72,7 +70,7 @@ app.get('/api/employee', (req, res) => {
 
 // Add a department
 app.post('/api/department', ({ body }, res) => {
-    const sql = `INSERT INTO department (name)
+    const sql = `INSERT INTO department (department_name)
     VALUES (?)`;
     const params = [body.name];
 
@@ -157,43 +155,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
-
-// Function to initialize app
-function init() {
-    inquirer.prompt([
-        {
-            type: 'list',
-            name: 'action',
-            message: 'What would you like to do?',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
-        }
-    ])
-    .then((data) => {
-        switch (data.action) {
-            case 'View all departments':
-                viewDepartments();
-                break;
-            case 'View all roles':
-                viewRoles();
-                break;
-            case 'View all employees':
-                viewEmployees();
-                break;
-            case 'Add a department':
-                addDepartment();
-                break;
-            case 'Add a role':
-                addRole();
-                break;
-            case 'Add an employee':
-                addEmployee();
-                break;
-            case 'Update an employee role':
-                updateEmployeeRole();
-                break;
-        }
-    })
-}
-
-// Function call to initialize app
-init();
