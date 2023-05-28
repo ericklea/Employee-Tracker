@@ -2,6 +2,8 @@
 const inquirer = require('inquirer');
 const sql = require('mysql2');
 
+
+
 // Connect to database
 const connection = sql.createConnection(
     {
@@ -11,16 +13,9 @@ const connection = sql.createConnection(
         database: 'tracker_db'
     });
 
-// Connect to database
-connection.connect(err => {
-    if (err) throw err;
-    console.log('connected as id ' + connection.threadId);
-    promptUser();
-});
-
 // Run inquirer prompt
 function promptUser() {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             type: 'list',
             name: 'choice',
@@ -146,7 +141,6 @@ function promptUser() {
  
 promptUser();
 
-module.exports = db;
 
 
 
