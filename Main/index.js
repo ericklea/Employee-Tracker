@@ -13,6 +13,11 @@ const connection = sql.createConnection(
         database: 'tracker_db'
     });
 
+connection.connect(err => {
+    if (err) throw err;
+    console.log('connected as id ' + connection.threadId);
+});
+
 // Run inquirer prompt
 function promptUser() {
     inquirer.prompt([
@@ -20,7 +25,7 @@ function promptUser() {
             type: 'list',
             name: 'choice',
             message: 'What would you like to do?',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit']
+            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit',]
         }
     ])
 // View all departments, roles, or employees
@@ -28,19 +33,19 @@ function promptUser() {
     if (data.choice === 'View all departments') {
         connection.query('SELECT * FROM department', (err, res) => {
             if (err) throw err;
-            console.log(res);
+            console.table(res);
             promptUser();
         });
     } else if (data.choice === 'View all roles') {
         connection.query('SELECT * FROM role', (err, res) => {
             if (err) throw err;
-            console.log(res);
+            console.table(res);
             promptUser();
         });
     } else if (data.choice === 'View all employees') {
         connection.query('SELECT * FROM employee', (err, res) => {
             if (err) throw err;
-            console.log(res);
+            console.table(res);
             promptUser();
         });
     } else if (data.choice === 'Add a department') {
@@ -51,10 +56,10 @@ function promptUser() {
                 message: 'What is the name of the department?'
             }
         ])
-        .then( (data) => {
+        .then( (choice) => {
             connection.query('INSERT INTO department (name) VALUES (?)', [choice.departmentName], (err, res) => {
                 if (err) throw err;
-                console.log(res);
+                console.table(res);
                 promptUser();
             });
         });
@@ -76,7 +81,7 @@ function promptUser() {
                 message: 'What is the department ID of the role?'
             }
         ])
-        .then( (data) => {
+        .then( (choice) => {
             connection.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', [choice.roleName, choice.roleSalary, choice.roleDepartment], (err, res) => {
                 if (err) throw err;
                 console.log(`${choice.roleName} added to roles`);
@@ -106,7 +111,7 @@ function promptUser() {
                 message: 'What is the manager ID of the employee?'
             }
         ])
-        .then( (data) => {
+        .then( (choice) => {
             connection.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [choice.employeeFirstName, choice.employeeLastName, choice.employeeRole, choice.employeeManager], (err, res) => {
                 if (err) throw err;
                 console.log(`${choice.employeeFirstName} ${choice.employeeLastName} added to employees`);
@@ -126,7 +131,7 @@ function promptUser() {
                 message: 'What is the new role ID of the employee?'
             }
         ])
-        .then( (data) => {
+        .then( (choice) => {
             connection.query('UPDATE employee SET role_id = ? WHERE id = ?', [choice.roleUpdate, choice.employeeUpdate], (err, res) => {
                 if (err) throw err;
                 console.log(`Employee ${choice.employeeUpdate} updated to role ${choice.roleUpdate}`);
