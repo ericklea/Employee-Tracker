@@ -140,6 +140,9 @@ function promptUser() {
         });
     } else if (data.choice === 'Exit') {
         connection.end();
+    }
+});
+};
  
 promptUser();
 
