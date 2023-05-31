@@ -14,5 +14,6 @@ INSERT INTO roles (title, salary, department_id) VALUES ('Role Title','salary','
 INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ('First Name', 'Last Name', 1, 1);
 UPDATE departments SET department_name = 'New Department Name' WHERE id ='';
 see video:
+![alt text](video/employee_tracker.gif)
 # Credits
 For this project, I utilized code from in class activities from The University of Utah Coding Bootcamp. Additionally, I utilized ideas from https://youtube.com and https://w3schools.com. As well, I received assistance for this project from University of Utah Coding Bootcamp tutor Scott Everett.
