@@ -49,7 +49,7 @@ function promptUser() {
             promptUser();
         });
     } else if (data.choice === 'Add a department') {
-        const department = inquirer.prompt([
+        inquirer.prompt([
             {
                 type: 'input',
                 name: 'departmentName',
@@ -57,14 +57,15 @@ function promptUser() {
             }
         ])
         .then( (choice) => {
-            connection.query('INSERT INTO department (name) VALUES (?)', [choice.departmentName], (err, res) => {
+            connection.query("INSERT INTO department (department_name) VALUES (?)", [choice.departmentName], (err, res) => {
                 if (err) throw err;
+                console.log(`${choice.departmentName} added to departments`);
                 console.table(res);
                 promptUser();
             });
         });
     } else if (data.choice === 'Add a role') {
-        const role = inquirer.prompt([
+        inquirer.prompt([
             {
                 type: 'input',
                 name: 'roleName',
@@ -89,7 +90,7 @@ function promptUser() {
             });
         });
     } else if (data.choice === 'Add an employee') {
-        const employee = inquirer.prompt([
+        inquirer.prompt([
             {
                 type: 'input',
                 name: 'employeeFirstName',
@@ -119,7 +120,7 @@ function promptUser() {
             });
         });
     } else if (data.choice === 'Update an employee role') {
-        const update = inquirer.prompt([
+        inquirer.prompt([
             {
                 type: 'input',
                 name: 'employeeUpdate',
